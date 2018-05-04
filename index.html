@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Monster Slayer</title>
+        <script src="vue.js"></script>
+        <link rel="stylesheet" href="css/foundation.min.css">
+        <link rel="stylesheet" href="css/app.css">
+    </head>
+    <body>
+        <div id="app">
+            <section class="row">
+                <div class="small-6 columns">
+                    <h1 class="text-center">YOU - {{playerHealth}}</h1>
+                    <div class="healthbar">
+                        <div class="text-center healthbar" :style="{width :playerHealth + '%'}" style="background-color: green; height :40px; margin: 0; color: white;">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="small-6 columns">
+                    <h1 class="text-center">MONSTER - {{monsterHealth}}</h1>
+                    <div class="healthbar">
+                        <div class="text-center healthbar" :style="{width :monsterHealth + '%'}" style="background-color: green; height: 40px; margin: 0; color: white;">
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="row controls" v-if="!startGame">
+                <div class="small-12 columns">
+                    <button id="start-game" @click="startGame=!startGame, difficultySelection=!difficultySelection">START NEW GAME</button>
+                </div>
+            </section>
+            <section class="row controls" v-if="difficultySelection">
+                    <div class="small-12 columns">
+                        <button id="easy-dif" @click="difficultySelection=!difficultySelection, initialize(), difficulty = 1">Easy</button>
+                        <button id="medium-dif" @click="difficultySelection=!difficultySelection, initialize(), difficulty = 5">Medium</button>
+                        <button id="hard-dif" @click="difficultySelection=!difficultySelection, initialize(), difficulty = 8">Hard</button>
+                    </div>
+                </section>
+            <section class="row controls" v-if="gameRunning">
+                <div class="small-12 columns">
+                    <button id="attack" @click="playerAttack()">ATTACK</button>
+                    <button id="special-attack" @click="specialAttack()">SPECIAL ATTACK</button>
+                    <button id="heal" @click="heal()">HEAL</button>
+                    <button id="give-up" @click="giveUp()">GIVE UP</button>
+                </div>
+            </section>
+            <section class="row log" v-if="battleLog.length!=0">
+                <div class="small-12 columns log">
+                    <ul>
+                        <li v-for="(value) in battleLog">
+                            <p :class="'player-turn'" v-if="value.player==='player'">Turn: {{value.message}}</p>            
+                            <p :class="'monster-turn'" v-if="value.player==='monster'">Turn: {{value.message}}</template> 
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+        <script src="app.js"></script>
+    </body>
+</html>
